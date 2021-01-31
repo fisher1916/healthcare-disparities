@@ -22,7 +22,7 @@ def process_pipleine():
     cd.census_data_api_extract()
 
     # ADD MY CODE HERE
-    db.cms_data_load()
+    # db.cms_data_load()
 
     print(">>> Completed ETL processing... <<<")
 
