@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# API and DB credentials
+db_info.py
+api_key.py
+
+
