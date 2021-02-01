@@ -61,7 +61,7 @@ def census_data_api_extract():
     # Read codes into a pandas dataframe
     # states = pd.read_csv(fips_state_codes, dtype=str)
 
-    # Prepare the target output dataframe
+    # Prepare the target output dataframe for subject
     columns = {
         "County",
         "Household Median Income",
@@ -96,7 +96,7 @@ def census_data_api_extract():
         "S1201_C02_001E," + \
         "S1501_C02_015E"
 
-    print("start calling census API")
+    print("start calling census subject API")
 
     # Loop through each state extracting the state info
     # for state in states["FIPS State Numeric Code"].tolist():
@@ -109,7 +109,7 @@ def census_data_api_extract():
     # Get the response back from the API
     response = requests.get(url).json()
 
-    print("got a response from the census API, begin processing")
+    print("got a response from the census subject API, begin processing")
 
     # Loop through the response appended to the end of the dataframe
     # Skip the first results as it is an info record
@@ -128,9 +128,9 @@ def census_data_api_extract():
         }
         census_df = census_df.append(new_row, ignore_index=True)
 
-    print("completed calling census API")
+    print("completed calling census subject API")
 
-    print("scrubbing census data for county and state")
+    print("scrubbing census subject data for county and state")
 
     # Split and return the list of County and State
     census_df["County_State"] = census_df.loc[:, "County"].apply(county_split)
@@ -154,29 +154,124 @@ def census_data_api_extract():
     # Dump Puerto Rico
     census_df = census_df[census_df["State Abbr"] != "PR"]
 
-    print(f"writing the census data to {output_file}")
-
-    # Write census data to file
-    census_df.to_csv(output_file, index=False, header=True)
+    # Prepare the target output dataframe for profile
+    columns = {
+        "County",
+        "Percent One Race White",
+        "Percent One Race Black+",
+        "Percent One Race American Indian+",
+        "Percent One Race Asian",
+        "Percent One Race Hawaiian+",
+        "Percent One Race Some Other",
+        "State Code",
+        "County Code",
+    }
+    census_race_df = pd.DataFrame(columns=columns)
 
     # Value Mappings
     # refer to: https://api.census.gov/data/2019/acs/acs5/profile/groups/DP05.html
     # NAME = County Name
-    # DP05_0037E = White
-    # DP05_0038E = Family Median Income
-    # DP05_0039E = Total Population
-    # DP05_0044E = Percent Poverty
-    # DP05_0052E = Percent Veteran
-    # DP05_0057E = Percent Married
+    # DP05_0037PE = One Race White
+    # DP05_0038PE = One Race Black or African American
+    # DP05_0039PE = One Race American Indian or Alaska Native
+    # DP05_0044PE = One Race Asian
+    # DP05_0052PE = One Race Native Hawaiian and Other Pacific Islander
+    # DP05_0057PE = One Race Some Other Race
     fetchColumns = \
         "NAME," + \
-        "DP05_0037E," + \
-        "DP05_0038E," + \
-        "DP05_0039E," + \
-        "DP05_0044E," + \
-        "DP05_0052E," + \
-        "DP05_0057E"
+        "DP05_0037PE," + \
+        "DP05_0038PE," + \
+        "DP05_0039PE," + \
+        "DP05_0044PE," + \
+        "DP05_0052PE," + \
+        "DP05_0057PE"
 
-    url = "https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}"
+    print("start calling census profile API")
+
+    # Build the URL for the API call
+    url = f"https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}"
+
+    # Get the response back from the API
+    response = requests.get(url).json()
+
+    print("got a response from the census profile API, begin processing")
+
+    # Loop through the response appended to the end of the dataframe
+    # Skip the first results as it is an info record
+    for i in range(1, len(response)):
+        new_row = {
+            "County": response[i][0],
+            "Percent One Race White": response[i][1],
+            "Percent One Race Black+": response[i][2],
+            "Percent One Race American Indian+": response[i][3],
+            "Percent One Race Asian": response[i][4],
+            "Percent One Race Hawaiian+": response[i][5],
+            "Percent One Race Some Other": response[i][6],
+            "State Code": response[i][7],
+            "County Code": response[i][8],
+        }
+        census_race_df = census_race_df.append(new_row, ignore_index=True)
+
+    print("completed calling census profile API")
+
+    print("scrubbing census profile data for county and state")
+
+    # Split and return the list of County and State
+    census_race_df["County_State"] = census_race_df.loc[:,
+                                                        "County"].apply(county_split)
+
+    # Take the list from County_State column and make then separate columns in
+    # the dataframe
+    census_race_df[["County Name", "State"]] = pd.DataFrame(
+        census_race_df["County_State"].tolist(), index=census_race_df.index)
+
+    # Rearrange columns for output file
+    census_race_df = census_race_df[["County Name", "State",
+                                     "Percent One Race White",
+                                     "Percent One Race Black+",
+                                     "Percent One Race American Indian+",
+                                     "Percent One Race Asian",
+                                     "Percent One Race Hawaiian+",
+                                     "Percent One Race Some Other",
+                                     "State Code", "County Code"]]
+
+    # Get the two letter state abbreviations
+    census_race_df["State Abbr"] = census_race_df["State"].apply(state_abbr)
+    census_race_df['County Name'] = census_race_df['County Name'].str.upper()
+
+    # Dump Puerto Rico
+    census_race_df = census_race_df[census_race_df["State Abbr"] != "PR"]
+
+    print(f"writing the census profile data to {output_file}")
+
+    census_merged = pd.merge(census_df, census_race_df, how="inner",
+                             on=["State Code", "County Code"])
+    # Rearrange columns for output file
+    census_merged = census_merged[["County Name_x",
+                                   "State_x",
+                                   "State Abbr_x",
+                                   "Household Median Income",
+                                   "Family's Median Income",
+                                   "Total Population",
+                                   "Percent Poverty",
+                                   "Percent Veteran",
+                                   "Percent Married",
+                                   "Percent Bachelor",
+                                   "Percent One Race White",
+                                   "Percent One Race Black+",
+                                   "Percent One Race American Indian+",
+                                   "Percent One Race Asian",
+                                   "Percent One Race Hawaiian+",
+                                   "Percent One Race Some Other",
+                                   "State Code",
+                                   "County Code"]]
+
+    census_merged = census_merged.rename(
+        columns={"County Name_x": "County Name",
+                 "State_x": "State",
+                 "State Abbr_x": "State Abbr"})
+
+    # Write census data to file
+    census_merged.to_csv(output_file, index=False, header=True)
 
     print("<< Completed census api processing... >>")
