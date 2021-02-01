@@ -163,6 +163,7 @@ def census_data_api_extract():
         "Percent One Race Asian",
         "Percent One Race Hawaiian+",
         "Percent One Race Some Other",
+        "Percent Two Race Or More",
         "State Code",
         "County Code",
     }
@@ -177,6 +178,7 @@ def census_data_api_extract():
     # DP05_0044PE = One Race Asian
     # DP05_0052PE = One Race Native Hawaiian and Other Pacific Islander
     # DP05_0057PE = One Race Some Other Race
+    # DP05_0058PE = Two Race or More
     fetchColumns = \
         "NAME," + \
         "DP05_0037PE," + \
@@ -184,7 +186,8 @@ def census_data_api_extract():
         "DP05_0039PE," + \
         "DP05_0044PE," + \
         "DP05_0052PE," + \
-        "DP05_0057PE"
+        "DP05_0057PE," + \
+        "DP05_0058PE"
 
     print("start calling census profile API")
 
@@ -207,8 +210,9 @@ def census_data_api_extract():
             "Percent One Race Asian": response[i][4],
             "Percent One Race Hawaiian+": response[i][5],
             "Percent One Race Some Other": response[i][6],
-            "State Code": response[i][7],
-            "County Code": response[i][8],
+            "Percent Two Race Or More": response[i][7],
+            "State Code": response[i][8],
+            "County Code": response[i][9],
         }
         census_race_df = census_race_df.append(new_row, ignore_index=True)
 
@@ -233,6 +237,7 @@ def census_data_api_extract():
                                      "Percent One Race Asian",
                                      "Percent One Race Hawaiian+",
                                      "Percent One Race Some Other",
+                                     "Percent Two Race Or More",
                                      "State Code", "County Code"]]
 
     # Get the two letter state abbreviations
@@ -263,6 +268,7 @@ def census_data_api_extract():
                                    "Percent One Race Asian",
                                    "Percent One Race Hawaiian+",
                                    "Percent One Race Some Other",
+                                   "Percent Two Race Or More",
                                    "State Code",
                                    "County Code"]]
 
