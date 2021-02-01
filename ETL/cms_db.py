@@ -174,6 +174,7 @@ def cms_data_load():
             percent_asian=float(row["Percent One Race Asian"]),
             percent_hawaiian=float(row["Percent One Race Hawaiian+"]),
             percent_some_other=float(row["Percent One Race Some Other"]),
+            percent_two_or_more=float(row["Percent Two Race Or More"]),
             state_code=row["State Code"],
             county_code=row["County Code"],
         )
