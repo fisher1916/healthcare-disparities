@@ -16,6 +16,7 @@ percent_american_indian NUMERIC
 percent_asian NUMERIC
 percent_hawaiian NUMERIC
 percent_some_other NUMERIC
+percent_two_or_more NUMERIC
 state_code VARCHAR(40)
 county_code VARCHAR(40)
 
