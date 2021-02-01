@@ -56,10 +56,10 @@ def census_data_api_extract():
             return
 
     # Start processing
-    print("fetching fips state codes")
+    # print("fetching fips state codes")
 
     # Read codes into a pandas dataframe
-    states = pd.read_csv(fips_state_codes, dtype=str)
+    # states = pd.read_csv(fips_state_codes, dtype=str)
 
     # Prepare the target output dataframe
     columns = {
@@ -67,35 +67,66 @@ def census_data_api_extract():
         "Household Median Income",
         "Family's Median Income",
         "Total Population",
+        "Percent Poverty",
+        "Percent Veteran",
+        "Percent Married",
+        "Percent Bachelor",
         "State Code",
         "County Code",
     }
     census_df = pd.DataFrame(columns=columns)
 
+    # Value Mappings
+    # refer to: https://api.census.gov/data/2019/acs/acs5/subject/variables.html
+    # NAME = County Name
+    # S1903_C03_001E = Household Median Income
+    # S1903_C03_015E = Family Median Income
+    # S0101_C01_001E = Total Population
+    # S1701_C03_001E = Percent Poverty
+    # S2101_C04_001E = Percent Veteran
+    # S1201_C02_001E = Percent Married
+    # S1501_C02_015E = Percent Bachelor
+    fetchColumns = \
+        "NAME," + \
+        "S1903_C03_001E," + \
+        "S1903_C03_015E," + \
+        "S0101_C01_001E," + \
+        "S1701_C03_001E," + \
+        "S2101_C04_001E," + \
+        "S1201_C02_001E," + \
+        "S1501_C02_015E"
+
     print("start calling census API")
+
     # Loop through each state extracting the state info
-    for state in states["FIPS State Numeric Code"].tolist():
+    # for state in states["FIPS State Numeric Code"].tolist():
 
-        # Build the URL for the API call
-        url = f"https://api.census.gov/data/2019/acs/acs5/subject?get=NAME,S1903_C03_001E,S1903_C03_015E,S0101_C01_001E&for=county&in=state:{state}&in=county:*&key={key}"
+    # Build the URL for the API call
+    url = f"https://api.census.gov/data/2019/acs/acs5/subject?get={fetchColumns}&for=county&in=state:*&in=county:*&key={key}"
 
-        print(f"fetching census data for state: {state}")
+    #print(f"fetching census data for state: {state}")
 
-        # Get the response back from the API
-        response = requests.get(url).json()
+    # Get the response back from the API
+    response = requests.get(url).json()
 
-        # Loop through the response appended to the end of the dataframe
-        # Skip the first results as it is an info record
-        for i in range(1, len(response)):
-            new_row = {
-                "County": response[i][0],
-                "Household Median Income": response[i][1],
-                "Family's Median Income": response[i][2],
-                "Total Population": response[i][3],
-                "State Code": response[i][4],
-                "County Code": response[i][5],
-            }
-            census_df = census_df.append(new_row, ignore_index=True)
+    print("got a response from the census API, begin processing")
+
+    # Loop through the response appended to the end of the dataframe
+    # Skip the first results as it is an info record
+    for i in range(1, len(response)):
+        new_row = {
+            "County": response[i][0],
+            "Household Median Income": response[i][1],
+            "Family's Median Income": response[i][2],
+            "Total Population": response[i][3],
+            "Percent Poverty": response[i][4],
+            "Percent Veteran": response[i][5],
+            "Percent Married": response[i][6],
+            "Percent Bachelor": response[i][7],
+            "State Code": response[i][8],
+            "County Code": response[i][9],
+        }
+        census_df = census_df.append(new_row, ignore_index=True)
 
     print("completed calling census API")
 
@@ -111,14 +142,41 @@ def census_data_api_extract():
 
     # Rearrange columns for output file
     census_df = census_df[["County Name", "State", "Household Median Income",
-                           "Family's Median Income", "Total Population", "State Code", "County Code"]]
+                           "Family's Median Income", "Total Population",
+                           "Percent Poverty", "Percent Veteran",
+                           "Percent Married", "Percent Bachelor",
+                           "State Code", "County Code"]]
 
     # Get the two letter state abbreviations
     census_df["State Abbr"] = census_df["State"].apply(state_abbr)
     census_df['County Name'] = census_df['County Name'].str.upper()
+
+    # Dump Puerto Rico
+    census_df = census_df[census_df["State Abbr"] != "PR"]
+
     print(f"writing the census data to {output_file}")
 
     # Write census data to file
     census_df.to_csv(output_file, index=False, header=True)
+
+    # Value Mappings
+    # refer to: https://api.census.gov/data/2019/acs/acs5/profile/groups/DP05.html
+    # NAME = County Name
+    # DP05_0037E = White
+    # DP05_0038E = Family Median Income
+    # DP05_0039E = Total Population
+    # DP05_0044E = Percent Poverty
+    # DP05_0052E = Percent Veteran
+    # DP05_0057E = Percent Married
+    fetchColumns = \
+        "NAME," + \
+        "DP05_0037E," + \
+        "DP05_0038E," + \
+        "DP05_0039E," + \
+        "DP05_0044E," + \
+        "DP05_0052E," + \
+        "DP05_0057E"
+
+    url = "https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}"
 
     print("<< Completed census api processing... >>")
