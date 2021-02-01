@@ -19,6 +19,7 @@ CREATE TABLE "census" (
     "percent_asian" NUMERIC   NOT NULL,
     "percent_hawaiian" NUMERIC   NOT NULL,
     "percent_some_other" NUMERIC   NOT NULL,
+    "percent_two_or_more" NUMERIC   NOT NULL,
     "state_code" VARCHAR(40)   NOT NULL,
     "county_code" VARCHAR(40)   NOT NULL,
     CONSTRAINT "pk_census" PRIMARY KEY (
