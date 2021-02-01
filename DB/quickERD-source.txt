@@ -1,0 +1,39 @@
+census as cs
+-
+county_name PK VARCHAR(40)
+state VARCHAR(40)
+state_abbr PK VARCHAR(40)
+household_median_income INT
+family_median_income INT
+total_population INT
+percent_poverty NUMERIC
+percent_veteran NUMERIC
+percent_married NUMERIC
+percent_bachelor NUMERIC
+percent_white NUMERIC
+percent_black NUMERIC
+percent_american_indian NUMERIC
+percent_asian NUMERIC
+percent_hawaiian NUMERIC
+percent_some_other NUMERIC
+state_code VARCHAR(40)
+county_code VARCHAR(40)
+
+cms as c
+-
+cms_id PK int AUTOINCREMENT
+facility_id VARCHAR(40) 
+facility_name VARCHAR(120)
+address VARCHAR(120)
+city VARCHAR(40)
+state VARCHAR(40) FK >- cs.state_abbr
+zip_code VARCHAR(40)
+county_name VARCHAR(120) FK >- cs.county_name
+measure_id VARCHAR(80)
+measure_name VARCHAR(120)
+denominator INT
+score NUMERIC
+lower_estimate NUMERIC
+higher_estimate NUMERIC
+start_date DATE
+end_date DATE
