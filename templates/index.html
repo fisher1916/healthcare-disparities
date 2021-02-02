@@ -4,13 +4,50 @@
 <head>
     <meta charset="utf-8">
     <title>Healthcare Disparities</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-    <div class="chart1"></div>
-    <div class="chart2"></div>
-    <div class="chart3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+                <h1>Healthcare Disparities in Mortality with Selected Demographics</h1>
+                <p>Use the interactive charts below to explore the dataset</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="well">
+                    <h5>State:</h5>
+                    <select id="stateSelect">
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Demographic Info</h3>
+                    </div>
+                    <div id="sample-metadata" class="panel-body"></div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="chart1">Chart 1</div>
+            </div>
+            <div class="col-md-5">
+                <div class="chart2">Chart 2</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart3">Chart 3</div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- `url_for()` is a flask thing to find the location of the file -->
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
