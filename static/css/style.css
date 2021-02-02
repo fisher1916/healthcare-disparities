@@ -1,0 +1,11 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+#chart1,
+#chart2,
+#chart3,
+body,
+html {
+  height: 100%;
+}
