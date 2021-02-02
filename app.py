@@ -43,8 +43,6 @@ def mortality():
     """Return a list of a dicionary for mortality"""
     # Query all for mortality
     results = session.query(
-        Cms.state,
-        Cms.state_name,
         Cms.facility_name, 
         Cms.measure_name,
         Cms.score,
@@ -64,11 +62,9 @@ def mortality():
     session.close()
 
     cms_data = []
-    for state, state_name, facility_name, measure, score, poverty, veteran, married, bachelor, white, black, a_indian, asian, hawaiian, some_other,two_or_more in results:
+    for name, measure, score, poverty, veteran, married, bachelor, white, black, a_indian, asian, hawaiian, some_other,two_or_more in results:
         cms_dict = {}
-        cms_dict["state"] = state
-        cms_dict["state_name"] = state_name
-        cms_dict["facility_name"] = facility_name
+        cms_dict["name"] = name
         cms_dict["measure"] = measure
         cms_dict["score"] = score
         cms_dict["poverty"] = poverty
@@ -84,6 +80,7 @@ def mortality():
         cms_dict["two_or_more"] = two_or_more
         cms_data.append(cms_dict)
 
+    print(len(cms_data))
     return jsonify(cms_data)
 
 if __name__ == '__main__':
