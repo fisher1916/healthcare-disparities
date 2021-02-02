@@ -124,12 +124,12 @@ def cms_data_load():
     cms_df = cms_df[cms_df["County Name"] != "OBRIEN"]
     cms_df = cms_df[cms_df["County Name"] != "JEFFRSON DAVIS"]
 
-    cms_df = cms_df[(cms_df["County Name"] != "LASALLE")
-                    & (cms_df["State"] != "LA")]
-    cms_df = cms_df[(cms_df["County Name"] != "ST. MARYS")
-                    & (cms_df["State"] != "MD")]
-    cms_df = cms_df[(cms_df["County Name"] != "MCLEAN")
-                    & (cms_df["State"] != "MD")]
+    cms_df = cms_df[~((cms_df["County Name"] == "LASALLE")
+                    & (cms_df["State"] == "LA"))]
+    cms_df = cms_df[~((cms_df["County Name"] == "ST. MARYS")
+                    & (cms_df["State"] == "MD"))]
+    cms_df = cms_df[~((cms_df["County Name"] == "MCLEAN")
+                    & (cms_df["State"] == "ND"))]
 
     print("deleting necessary rows from cms...")
 
