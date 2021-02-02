@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Healthcare Disparities</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="chart1"></div>
+    <div class="chart2"></div>
+    <div class="chart3"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- `url_for()` is a flask thing to find the location of the file -->
+    <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+</body>
+
+</html>
