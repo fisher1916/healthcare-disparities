@@ -132,4 +132,5 @@ dmypy.json
 db_info.py
 api_key.py
 
-
+# ignore vscode directory
+.vscode/
