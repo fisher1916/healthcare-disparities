@@ -1,5 +1,7 @@
 // local url for mortality rates
-var url = "/mortality";
+var mortalityUrl = "/mortality";
+var statesURL = "/states";
+var mortalitiesUrl = "/mortalities/";
 
 //
 // Given the data passed find the unique elements by the object key and also sort
@@ -18,6 +20,10 @@ function getSortedElementsByKey(targetData, key) {
 function stateChange() {
   var valueSelected = this.value;
   console.log("changed state: " + valueSelected);
+
+  d3.json(mortalitiesUrl + valueSelected).then((mortalities) => {
+    console.log(mortalities);
+  });
 }
 
 //
@@ -37,7 +43,7 @@ function populateDropdown(
 
   // populate the options for the select list
   var options = dropDown
-    .selectAll("option")
+    .selectAll(null)
     .data(values)
     .enter()
     .append("option")
@@ -49,21 +55,24 @@ function populateDropdown(
   }
 }
 
-// load the data into the data variable
-d3.json(url).then((data) => {
-  console.log("records read:" + data.length);
-  console.log(data);
+function populateData() {
+  // load the data into the data variable
+  d3.json(mortalityUrl).then((data) => {
+    console.log("records read:" + data.length);
+    console.log(data);
+    // populate the state drop down
+    d3.json(statesURL).then((states) => {
+      console.log("states:");
+      console.log(states);
+      populateDropdown(
+        "stateSelect",
+        states,
+        "state_name",
+        "state",
+        stateChange
+      );
+    });
+  });
+}
 
-  // grab unique sorted values
-  const uniqueStates = getSortedElementsByKey(data, "state_name");
-  const uniqueMeasures = getSortedElementsByKey(data, "measure");
-
-  // populate the state drop down
-  populateDropdown(
-    "stateSelect",
-    uniqueStates,
-    "state_name",
-    "state",
-    stateChange
-  );
-});
+populateData();
