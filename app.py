@@ -45,7 +45,7 @@ def mortality():
     results = session.query(
         Cms.state,
         Cms.state_name,
-        Cms.facility_name, 
+        Cms.facility_name,
         Cms.measure_name,
         Cms.score,
         Cms.percent_poverty,
@@ -60,11 +60,11 @@ def mortality():
         Cms.percent_some_other,
         Cms.percent_two_or_more
     ).all()
-    
+
     session.close()
 
     cms_data = []
-    for state, state_name, facility_name, measure, score, poverty, veteran, married, bachelor, white, black, a_indian, asian, hawaiian, some_other,two_or_more in results:
+    for state, state_name, facility_name, measure, score, poverty, veteran, married, bachelor, white, black, a_indian, asian, hawaiian, some_other, two_or_more in results:
         cms_dict = {}
         cms_dict["state"] = state
         cms_dict["state_name"] = state_name
@@ -86,6 +86,68 @@ def mortality():
 
     return jsonify(cms_data)
 
+#
+# Summarize state mortality data and send back
+#
+
+
+@app.route("/mortalities/<state>")
+def mortalities(state):
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for mortalites by state"""
+    # Query all for mortality
+    query = session.query(Cms.measure_name, func.avg(Cms.score))
+
+    # check for the all condition and filter if valid state passed
+    if state != "all":
+        query = query.filter(Cms.state == state)
+
+    # group by measure name for uniqueness
+    query = query.group_by(Cms.measure_name)
+
+    # Get all the results
+    results = query.all()
+
+    session.close()
+
+    cms_data = []
+    for measure, score in results:
+        cms_dict = {}
+        cms_dict["measure"] = measure
+        cms_dict["score"] = score
+        cms_data.append(cms_dict)
+
+    return jsonify(cms_data)
+
+#
+# Get a list of unique states
+#
+
+
+@app.route("/states")
+def states():
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dictionary for states"""
+    results = session.query(Cms.state, Cms.state_name)\
+        .group_by(Cms.state, Cms.state_name)\
+        .order_by(Cms.state_name)\
+        .all()
+
+    session.close()
+
+    state_data = []
+    for state, state_name in results:
+        state_dict = {}
+        state_dict["state"] = state
+        state_dict["state_name"] = state_name
+        state_data.append(state_dict)
+
+    return jsonify(state_data)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
