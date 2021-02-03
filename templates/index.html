@@ -33,15 +33,15 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="chart1">Chart 1</div>
+                <div id="chart1"></div>
             </div>
             <div class="col-md-5">
-                <div class="chart2">Chart 2</div>
+                <div id="chart2">Chart 2</div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="chart3">Chart 3</div>
+                <div id="chart3">Chart 3</div>
             </div>
         </div>
     </div>
@@ -49,6 +49,7 @@
 
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- `url_for()` is a flask thing to find the location of the file -->
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
 </body>
