@@ -66,6 +66,69 @@ function updateStateChart(state) {
     Plotly.newPlot("chart1", barData, barLayout);
   });
 }
+
+function updateHistogram() {
+  var x1 = [];
+  var x2 = [];
+  for (var i = 1; i < 500; i++) {
+    k = Math.random();
+    x1.push(Math.random() + 1);
+    x2.push(Math.random() + 1.1);
+  }
+
+  var x1mean = d3.mean(x1);
+  var x2mean = d3.mean(x2);
+
+  var trace1 = {
+    x: x1,
+    type: "histogram",
+    opacity: 0.5,
+    marker: {
+      color: "green",
+    },
+  };
+  var trace2 = {
+    x: x2,
+    type: "histogram",
+    opacity: 0.6,
+    marker: {
+      color: "red",
+    },
+  };
+
+  var data = [trace1, trace2];
+
+  var layout = {
+    barmode: "overlay",
+    shapes: [
+      {
+        type: "line",
+        x0: x1mean,
+        y0: 0,
+        x1: x1mean,
+        y1: 40,
+        line: {
+          color: "green",
+          width: 3.5,
+          dash: "dot",
+        },
+      },
+      {
+        type: "line",
+        x0: x2mean,
+        y0: 0,
+        x1: x2mean,
+        y1: 40,
+        line: {
+          color: "red",
+          width: 3.5,
+          dash: "dot",
+        },
+      },
+    ],
+  };
+  Plotly.newPlot("chart2", data, layout);
+}
 //
 // Detect when a new state is selected
 //
@@ -125,3 +188,5 @@ function populateData() {
 populateData();
 
 updateStateChart("all");
+
+updateHistogram();
