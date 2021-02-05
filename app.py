@@ -148,6 +148,41 @@ def states():
 
     return jsonify(state_data)
 
+@app.route("/racemortalities")
+def racemortalities():
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for mortalites by state"""
+    # Query all for mortality
+    query = session.query(Cms.score, Cms.race_category)
+
+    # check for the all condition and filter if valid state passed
+    # death = "Death rate for COPD patients"
+    # death = "Death rate for pneumonia patients"
+    # death =  "Death rate for heart attack patients"
+    death = "Death rate for heart failure patients"
+    query = query.filter(Cms.measure_name == death)
+
+    # Get all the results
+    results = query.all()
+
+    session.close()
+
+    white_scores = []
+    black_scores = []
+    for score, race_category in results:
+        if race_category == "W":
+            white_scores.append(score)
+        else: 
+            black_scores.append(score)
+
+    cms_data = {
+        "measure": death,
+        "white_scores": white_scores,
+        "black_scores": black_scores,
+    }
+    return jsonify(cms_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
