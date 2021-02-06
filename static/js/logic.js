@@ -2,7 +2,8 @@
 var mortalityUrl = "/mortality";
 var statesURL = "/states";
 var mortalitiesUrl = "/mortalities/";
-var racemortalitiesURL = "/racemortalities";
+var racemortalitiesURL = "/racemortalities/";
+var measuresURL = "/measures";
 
 function mortalityMap(mortality) {
   var myMortality = "Unknown";
@@ -46,8 +47,6 @@ function updateStateChart(state) {
   }
 
   d3.json(mortalitiesUrl + state).then((mortalities) => {
-    console.log(mortalities);
-
     var barTrace = {
       type: "bar",
       x: mortalities.map((d) => mortalityMap(d.measure)),
@@ -68,16 +67,11 @@ function updateStateChart(state) {
   });
 }
 
-function updateHistogram() {
-  d3.json(racemortalitiesURL).then((mortalities) => {
-    console.log("racemortalities");
-    console.log(mortalities);
-    populateDropdown(
-        "measureSelect",
-        measure,
-        "measure_name",
-        measureChange
-      );
+function updateHistogram(measure) {
+  d3.json(racemortalitiesURL + measure).then((mortalities) => {
+    // console.log("racemortalities");
+    // console.log(mortalities);
+
     var x1 = mortalities["white_scores"];
     var x2 = mortalities["black_scores"];
 
@@ -90,7 +84,7 @@ function updateHistogram() {
       type: "histogram",
       opacity: 0.5,
       marker: {
-        color: "pink",
+        color: "green",
       },
     };
     var trace2 = {
@@ -128,7 +122,7 @@ function updateHistogram() {
           x1: x2mean,
           y1: 140,
           line: {
-            color: "red",
+            color: "purple",
             width: 3.5,
             dash: "dot",
           },
@@ -136,12 +130,14 @@ function updateHistogram() {
       ],
     };
     Plotly.newPlot("chart2", data, layout);
-});
+  });
+}
 //
 // Detect when a new state is selected
 //
 function stateChange() {
   updateStateChart(this.value);
+}
 function measureChange() {
   updateHistogram(this.value);
 }
@@ -182,8 +178,8 @@ function populateData() {
     console.log(data);
     // populate the state drop down
     d3.json(statesURL).then((states) => {
-      console.log("states:");
-      console.log(states);
+      // console.log("states:");
+      // console.log(states);
       populateDropdown(
         "stateSelect",
         states,
@@ -192,11 +188,22 @@ function populateData() {
         stateChange
       );
     });
+    d3.json(measuresURL).then((measures) => {
+      console.log("measures:");
+      console.log(measures);
+      populateDropdown(
+        "measureSelect",
+        measures,
+        "measure",
+        "measure",
+        measureChange
+      );
+    });
   });
-};
+}
 
 populateData();
 
 updateStateChart("all");
 
-updateHistogram();
+updateHistogram("Death rate for COPD patients");
