@@ -155,7 +155,7 @@ def racemortalities():
 
     """Return a list of a dicionary for mortalites by state"""
     # Query all for mortality
-    query = session.query(Cms.score, Cms.race_category)
+    query = session.query(func.avg(Cms.score), Cms.race_category)
 
     # check for the all condition and filter if valid state passed
     # death = "Death rate for COPD patients"
@@ -163,6 +163,7 @@ def racemortalities():
     # death =  "Death rate for heart attack patients"
     death = "Death rate for heart failure patients"
     query = query.filter(Cms.measure_name == death)
+    query = query.group_by(Cms.state, Cms.county_name, Cms.measure_name, Cms.race_category)
 
     # Get all the results
     results = query.all()
