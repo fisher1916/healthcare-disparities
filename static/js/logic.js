@@ -72,6 +72,12 @@ function updateHistogram() {
   d3.json(racemortalitiesURL).then((mortalities) => {
     console.log("racemortalities");
     console.log(mortalities);
+    populateDropdown(
+        "measureSelect",
+        measure,
+        "measure_name",
+        measureChange
+      );
     var x1 = mortalities["white_scores"];
     var x2 = mortalities["black_scores"];
 
@@ -84,7 +90,7 @@ function updateHistogram() {
       type: "histogram",
       opacity: 0.5,
       marker: {
-        color: "green",
+        color: "pink",
       },
     };
     var trace2 = {
@@ -93,7 +99,7 @@ function updateHistogram() {
       type: "histogram",
       opacity: 0.6,
       marker: {
-        color: "red",
+        color: "purple",
       },
     };
 
@@ -130,13 +136,14 @@ function updateHistogram() {
       ],
     };
     Plotly.newPlot("chart2", data, layout);
-  });
-}
+});
 //
 // Detect when a new state is selected
 //
 function stateChange() {
   updateStateChart(this.value);
+function measureChange() {
+  updateHistogram(this.value);
 }
 
 //
@@ -186,7 +193,7 @@ function populateData() {
       );
     });
   });
-}
+};
 
 populateData();
 
