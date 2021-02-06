@@ -148,8 +148,36 @@ def states():
 
     return jsonify(state_data)
 
-@app.route("/racemortalities")
-def racemortalities():
+    #
+# Get a list of unique measures
+#
+
+
+@app.route("/measures")
+def measures():
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dictionary for measures"""
+    results = session.query(Cms.measure_name)\
+        .group_by(Cms.measure_name)\
+        .order_by(Cms.measure_name)\
+        .all()
+
+    session.close()
+
+    measure_data = []
+    for measure_name in results:
+        measure_dict = {}
+        measure_dict["measure"] = measure_name[0] 
+        measure_data.append(measure_dict)
+
+
+    return jsonify(measure_data)
+
+
+@app.route("/racemortalities/<death>")
+def racemortalities(death):
     # Create session (link) from Python to the DB
     session = Session(engine)
 
@@ -161,7 +189,7 @@ def racemortalities():
     # death = "Death rate for COPD patients"
     # death = "Death rate for pneumonia patients"
     # death =  "Death rate for heart attack patients"
-    death = "Death rate for heart failure patients"
+    # death = "Death rate for heart failure patients"
     query = query.filter(Cms.measure_name == death)
     query = query.group_by(Cms.state, Cms.county_name, Cms.measure_name, Cms.race_category)
 
