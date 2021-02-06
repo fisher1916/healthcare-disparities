@@ -9,3 +9,7 @@ body,
 html {
   height: 100%;
 }
+#stateSelect,
+#measureSelect {
+  width: 100px;
+}
