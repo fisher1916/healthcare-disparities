@@ -2,6 +2,7 @@
 var mortalityUrl = "/mortality";
 var statesURL = "/states";
 var mortalitiesUrl = "/mortalities/";
+var racemortalitiesURL = "/racemortalities";
 
 function mortalityMap(mortality) {
   var myMortality = "Unknown";
@@ -68,66 +69,68 @@ function updateStateChart(state) {
 }
 
 function updateHistogram() {
-  var x1 = [];
-  var x2 = [];
-  for (var i = 1; i < 500; i++) {
-    k = Math.random();
-    x1.push(Math.random() + 1);
-    x2.push(Math.random() + 1.1);
-  }
+  d3.json(racemortalitiesURL).then((mortalities) => {
+    console.log("racemortalities");
+    console.log(mortalities);
+    var x1 = mortalities["white_scores"];
+    var x2 = mortalities["black_scores"];
 
-  var x1mean = d3.mean(x1);
-  var x2mean = d3.mean(x2);
+    var x1mean = d3.mean(x1);
+    var x2mean = d3.mean(x2);
 
-  var trace1 = {
-    x: x1,
-    type: "histogram",
-    opacity: 0.5,
-    marker: {
-      color: "green",
-    },
-  };
-  var trace2 = {
-    x: x2,
-    type: "histogram",
-    opacity: 0.6,
-    marker: {
-      color: "red",
-    },
-  };
-
-  var data = [trace1, trace2];
-
-  var layout = {
-    barmode: "overlay",
-    shapes: [
-      {
-        type: "line",
-        x0: x1mean,
-        y0: 0,
-        x1: x1mean,
-        y1: 40,
-        line: {
-          color: "green",
-          width: 3.5,
-          dash: "dot",
-        },
+    var trace1 = {
+      name: "White Scores",
+      x: x1,
+      type: "histogram",
+      opacity: 0.5,
+      marker: {
+        color: "green",
       },
-      {
-        type: "line",
-        x0: x2mean,
-        y0: 0,
-        x1: x2mean,
-        y1: 40,
-        line: {
-          color: "red",
-          width: 3.5,
-          dash: "dot",
-        },
+    };
+    var trace2 = {
+      name: "Black Scores",
+      x: x2,
+      type: "histogram",
+      opacity: 0.6,
+      marker: {
+        color: "red",
       },
-    ],
-  };
-  Plotly.newPlot("chart2", data, layout);
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {
+      title: mortalities["measure"],
+      barmode: "overlay",
+      shapes: [
+        {
+          type: "line",
+          x0: x1mean,
+          y0: 0,
+          x1: x1mean,
+          y1: 140,
+          line: {
+            color: "green",
+            width: 3.5,
+            dash: "dot",
+          },
+        },
+        {
+          type: "line",
+          x0: x2mean,
+          y0: 0,
+          x1: x2mean,
+          y1: 140,
+          line: {
+            color: "red",
+            width: 3.5,
+            dash: "dot",
+          },
+        },
+      ],
+    };
+    Plotly.newPlot("chart2", data, layout);
+  });
 }
 //
 // Detect when a new state is selected
@@ -184,51 +187,6 @@ function populateData() {
     });
   });
 }
-// Load data from hours-of-tv-watched.csv
-// Best to open HTML in an incognito window!
-d3.csv("data/race_by_pop.csv").then(function(raceData) {
-
-  console.log(raceData);
-  // Cast each hours value in riskData as a number using the unary + operator
-  raceData.forEach(function(data) {
-      data.healthcare = +data.healthcare;
-      data.poverty = +data.poverty;
-      data.obesity = +data.obesity;
-      data.age = +data.age;
-      data.smokes = +data.smokes;
-      data.income = +data.income;
-  });
-  //Make chart
-  var svgWidth = 1000;
-  var svgHeight = 650;
-  
-  var margin = {
-    top: 20,
-    right: 40,
-    bottom: 100,
-    left: 100
-  };
-  
-  var width = svgWidth - margin.left - margin.right;
-  var height = svgHeight - margin.top - margin.bottom;
-  
-  var svg = d3
-    .select("#scatter")
-    .append("svg")
-    .attr("width", svgWidth)
-    .attr("height", svgHeight);
-    
-  
-  var chartGroup = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-  var t = d3.transition().duration(500)
-  var currentXlabel = "Poverty"
-  var currentYlabel = "Healthcare"
-}
-, function(error) {
-  console.log(error);
-});
 
 populateData();
 
