@@ -9,7 +9,17 @@ body,
 html {
   height: 100%;
 }
+
+#mapid {
+  /* width: 400px; */
+  height: 100%;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+}
+
 #stateSelect,
 #measureSelect {
   width: 100px;
 }
+

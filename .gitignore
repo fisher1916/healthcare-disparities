@@ -131,6 +131,7 @@ dmypy.json
 # API and DB credentials
 db_info.py
 api_key.py
+config.json
 
 # ignore vscode directory
 .vscode/
