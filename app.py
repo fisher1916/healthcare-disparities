@@ -32,7 +32,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def welcome():
-    return render_template("map.html")
+    return render_template("index.html")
 
 
 @app.route("/mortality")
@@ -212,6 +212,8 @@ def racemortalities(death):
         "black_scores": black_scores,
     }
     return jsonify(cms_data)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
