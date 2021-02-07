@@ -213,7 +213,38 @@ def racemortalities(death):
     }
     return jsonify(cms_data)
 
+@app.route("/urbanruralmortalities/<death>")
+def urbanruralmortalities(death):
+    # Create session (link) from Python to the DB
+    session = Session(engine)
 
+    """Return a list of a dicionary for mortalites by state"""
+    # Query all for mortality
+    query = session.query(func.avg(Cms.score), Cms.urban_rural_category)
+
+    # check for the all condition and filter if valid state passed
+    query = query.filter(Cms.measure_name == death)
+    query = query.group_by(Cms.state, Cms.county_name, Cms.measure_name, Cms.urban_rural_category)
+
+    # Get all the results
+    results = query.all()
+
+    session.close()
+
+    urban_scores = []
+    rural_scores = []
+    for score, urban_rural_category in results:
+        if urban_rural_category == "URBAN":
+            urban_scores.append(score)
+        else: 
+            rural_scores.append(score)
+
+    cms_data = {
+        "measure": death,
+        "urban_scores": urban_scores,
+        "rural_scores": rural_scores,
+    }
+    return jsonify(cms_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

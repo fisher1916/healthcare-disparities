@@ -4,6 +4,7 @@ var statesURL = "/states";
 var mortalitiesUrl = "/mortalities/";
 var racemortalitiesURL = "/racemortalities/";
 var measuresURL = "/measures";
+var urbanruralmortalitiesURL = "/urbanruralmortalities/";
 
 function mortalityMap(mortality) {
   var myMortality = "Unknown";
@@ -132,6 +133,72 @@ function updateHistogram(measure) {
     Plotly.newPlot("chart2", data, layout);
   });
 }
+
+function updateHistogram2(measure) {
+  d3.json(urbanruralmortalitiesURL + measure).then((mortalities) => {
+    // console.log("racemortalities");
+    // console.log(mortalities);
+
+    var x1 = mortalities["urban_scores"];
+    var x2 = mortalities["rural_scores"];
+
+    var x1mean = d3.mean(x1);
+    var x2mean = d3.mean(x2);
+
+    var trace1 = {
+      name: "Urban Scores",
+      x: x1,
+      type: "histogram",
+      opacity: 0.5,
+      marker: {
+        color: "yellow",
+      },
+    };
+    var trace2 = {
+      name: "Rural Scores",
+      x: x2,
+      type: "histogram",
+      opacity: 0.6,
+      marker: {
+        color: "brown",
+      },
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {
+      title: mortalities["measure"],
+      barmode: "overlay",
+      shapes: [
+        {
+          type: "line",
+          x0: x1mean,
+          y0: 0,
+          x1: x1mean,
+          y1: 140,
+          line: {
+            color: "yellow",
+            width: 3.5,
+            dash: "dot",
+          },
+        },
+        {
+          type: "line",
+          x0: x2mean,
+          y0: 0,
+          x1: x2mean,
+          y1: 140,
+          line: {
+            color: "brown",
+            width: 3.5,
+            dash: "dot",
+          },
+        },
+      ],
+    };
+    Plotly.newPlot("urbanChart", data, layout);
+  });
+}
 //
 // Detect when a new state is selected
 //
@@ -140,6 +207,7 @@ function stateChange() {
 }
 function measureChange() {
   updateHistogram(this.value);
+  updateHistogram2(this.value);
 }
 
 //
@@ -207,3 +275,5 @@ populateData();
 updateStateChart("all");
 
 updateHistogram("Death rate for COPD patients");
+
+updateHistogram2("Death rate for COPD patients");

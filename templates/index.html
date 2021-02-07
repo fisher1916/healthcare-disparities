@@ -38,8 +38,11 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <div id="chart2"></div>
+            </div>
+            <div class="col-md-5">
+                <div id="urbanChart"></div>
             </div>
         </div>
         <div class="row">
@@ -55,7 +58,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- `url_for()` is a flask thing to find the location of the file -->
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
-    
+
     <!--API key-->
     <!-- <script type="text/javascript" src="static/js/config.js"></script>-->
     <!-- Leaflet JS -->

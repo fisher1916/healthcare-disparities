@@ -4,6 +4,7 @@ body {
 }
 #chart1,
 #chart2,
+#urbanChart,
 #chart3,
 body,
 html {
@@ -22,4 +23,3 @@ html {
 #measureSelect {
   width: 100px;
 }
-
