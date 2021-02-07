@@ -9,3 +9,10 @@ body,
 html {
   height: 100%;
 }
+#mapid {
+  width: 180px;
+  height: 180px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
