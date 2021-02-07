@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("mapid", {
-  center: [40.7128, -74.0059],
-  zoom: 5,
+  center: [37.0902, -95.7129],
+  zoom: 4,
 });
 
 L.tileLayer(

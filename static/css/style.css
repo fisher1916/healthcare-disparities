@@ -12,11 +12,11 @@ html {
 }
 
 #mapid {
-  /* width: 400px; */
-  height: 100%;
-  /* position: absolute;
-  top: 0;
-  left: 0; */
+  position: relative;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 500px; /* or as desired */
+  width: 100%; /* This means "100% of the width of its container", the .col-md-8 */
 }
 
 #stateSelect,

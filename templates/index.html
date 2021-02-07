@@ -4,6 +4,14 @@
 <head>
     <meta charset="utf-8">
     <title>Healthcare Disparities</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -47,17 +55,18 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div id="chart3"></div>
+                <div id="mapid"></div>
             </div>
         </div>
     </div>
 
 
-
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- `url_for()` is a flask thing to find the location of the file -->
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
 
     <!--API key-->
     <!-- <script type="text/javascript" src="static/js/config.js"></script>-->
