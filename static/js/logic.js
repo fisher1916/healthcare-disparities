@@ -1,5 +1,4 @@
 // local url for mortality rates
-var mortalityUrl = "/mortality";
 var statesURL = "/states";
 var mortalitiesUrl = "/mortalities/";
 var racemortalitiesURL = "/racemortalities/";
@@ -68,6 +67,9 @@ function updateStateChart(state) {
   });
 }
 
+//
+// Plot Urban vs Rural histogram
+//
 function updateHistogram(measure) {
   d3.json(racemortalitiesURL + measure).then((mortalities) => {
     // console.log("racemortalities");
@@ -134,6 +136,9 @@ function updateHistogram(measure) {
   });
 }
 
+//
+// Plot Urban vs Rural histogram
+//
 function updateHistogram2(measure) {
   d3.json(urbanruralmortalitiesURL + measure).then((mortalities) => {
     // console.log("racemortalities");
@@ -199,12 +204,17 @@ function updateHistogram2(measure) {
     Plotly.newPlot("urbanChart", data, layout);
   });
 }
+
 //
 // Detect when a new state is selected
 //
 function stateChange() {
   updateStateChart(this.value);
 }
+
+//
+// Detect when a new measure is selected
+//
 function measureChange() {
   updateHistogram(this.value);
   updateHistogram2(this.value);
@@ -240,33 +250,21 @@ function populateDropdown(
 }
 
 function populateData() {
-  // load the data into the data variable
-  d3.json(mortalityUrl).then((data) => {
-    console.log("records read:" + data.length);
-    console.log(data);
-    // populate the state drop down
-    d3.json(statesURL).then((states) => {
-      // console.log("states:");
-      // console.log(states);
-      populateDropdown(
-        "stateSelect",
-        states,
-        "state_name",
-        "state",
-        stateChange
-      );
-    });
-    d3.json(measuresURL).then((measures) => {
-      console.log("measures:");
-      console.log(measures);
-      populateDropdown(
-        "measureSelect",
-        measures,
-        "measure",
-        "measure",
-        measureChange
-      );
-    });
+  d3.json(statesURL).then((states) => {
+    // console.log("states:");
+    // console.log(states);
+    populateDropdown("stateSelect", states, "state_name", "state", stateChange);
+  });
+  d3.json(measuresURL).then((measures) => {
+    // console.log("measures:");
+    // console.log(measures);
+    populateDropdown(
+      "measureSelect",
+      measures,
+      "measure",
+      "measure",
+      measureChange
+    );
   });
 }
 
