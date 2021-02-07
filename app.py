@@ -138,7 +138,6 @@ def racemortalities(death):
     query = session.query(func.avg(Cms.score), Cms.race_category)
 
     # check for the all condition and filter if valid state passed
-    # death = "Death rate for COPD patients"
     # death = "Death rate for pneumonia patients"
     # death =  "Death rate for heart attack patients"
     # death = "Death rate for heart failure patients"
@@ -204,6 +203,74 @@ def urbanruralmortalities(death):
         "rural_scores": rural_scores,
     }
     return jsonify(cms_data)
+
+#
+# Get all county data by mortality (death) category
+#
+
+
+@app.route("/getallmortalities/<death>")
+def getallmortalities(death):
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for mortalites by state"""
+    # Query all for mortality
+    query = session.query(
+        Cms.state,
+        Cms.county_name,
+        Cms.total_population,
+        Cms.race_category,
+        Cms.urban_rural_category,
+        Fips.lat,
+        Fips.long,
+        func.avg(Cms.score)
+    )
+
+    death = "Death rate for COPD patients"
+
+    # check for the all condition and filter if valid state passed
+    query = query.filter(
+        Cms.measure_name == death,
+        Cms.state_code == Fips.state_code,
+        Cms.county_code == Fips.county_code,
+    )
+    query = query.group_by(
+        Cms.state,
+        Cms.county_name,
+        Cms.total_population,
+        Cms.race_category,
+        Cms.urban_rural_category,
+        Fips.lat,
+        Fips.long
+    )
+
+    print(query.statement.compile())
+
+    # Get all the results
+    results = query.all()
+
+    session.close()
+
+    counties = []
+    for state, county, population, race, urban_rural, lat, lng, score in results:
+        county_dict = {}
+        county_dict["county"] = county
+        county_dict["state"] = state
+        county_dict["population"] = population
+        county_dict["race"] = race
+        county_dict["area"] = urban_rural
+        county_dict["lat"] = lat
+        county_dict["long"] = lng
+        county_dict["score"] = score
+
+        counties.append(county_dict)
+
+    counties_data = {
+        "measure": death,
+        "counties": counties,
+    }
+    return jsonify(counties_data)
 
 
 # main program
