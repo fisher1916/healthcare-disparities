@@ -19,7 +19,7 @@ Base.prepare(engine, reflect=True)
 
 # Save reference to the table
 Cms = Base.classes.cms
-#Fips = Base.classes.lat_lon_fips
+Fips = Base.classes.lat_lon_fips
 
 #################################################
 # Flask Setup
