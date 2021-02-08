@@ -42,6 +42,8 @@ def welcome():
 
 @app.route("/mortalities/<state>")
 def mortalities(state):
+
+    # Get the measure scores
     # Create session (link) from Python to the DB
     session = Session(engine)
 
@@ -68,7 +70,110 @@ def mortalities(state):
         cms_dict["score"] = score
         cms_data.append(cms_dict)
 
-    return jsonify(cms_data)
+    # Get the average race percent
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for race by state"""
+    # Query all for races
+    query = session.query(func.avg(Cms.percent_white),
+                          func.avg(Cms.percent_black))
+
+    # check for the all condition and filter if valid state passed
+    if state != "all":
+        query = query.filter(Cms.state == state)
+
+    # print(query.statement.compile())
+
+    # Get all the results
+    results = query.first()
+
+    session.close()
+
+    demo_data = []
+
+    demo_dict = {}
+    demo_dict["name"] = "White"
+    demo_dict["percent"] = results[0]
+    demo_data.append(demo_dict)
+
+    demo_dict = {}
+    demo_dict["name"] = "Black"
+    demo_dict["percent"] = results[1]
+    demo_data.append(demo_dict)
+
+    # Get the average urban / rural percent
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for population by state"""
+    # Query all for population
+    query = session.query(func.sum(Cms.total_population))
+
+    # Grab rural numbers only less than or equal to 50000
+    query = query.filter(Cms.total_population <= 50000)
+
+    # check for the all condition and filter if valid state passed
+    if state != "all":
+        query = query.filter(Cms.state == state)
+
+    # print(query.statement.compile())
+
+    # Get all the results
+    results = query.first()
+
+    session.close()
+
+    rural_total = 0
+    if not results[0] is None:
+        rural_total = int(results[0])
+
+    # Get the average urban / rural percent
+    # Create session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of a dicionary for population by state"""
+    # Query all for population
+    query = session.query(func.sum(Cms.total_population))
+
+    # Grab urban numbers only greater than 50000
+    query = query.filter(Cms.total_population > 50000)
+
+    # check for the all condition and filter if valid state passed
+    if state != "all":
+        query = query.filter(Cms.state == state)
+
+    # print(query.statement.compile())
+
+    # Get all the results
+    results = query.first()
+
+    session.close()
+
+    urban_total = 0
+    if not results[0] is None:
+        urban_total = int(results[0])
+
+    total_population = rural_total + urban_total
+
+    if total_population == 0:
+        total_population = 1
+
+    demo_dict = {}
+    demo_dict["name"] = "Rural"
+    demo_dict["percent"] = (rural_total/total_population) * 100
+    demo_data.append(demo_dict)
+
+    demo_dict = {}
+    demo_dict["name"] = "Urban"
+    demo_dict["percent"] = (urban_total/total_population) * 100
+    demo_data.append(demo_dict)
+
+    return_data = {}
+    return_data["measures"] = cms_data
+    return_data["demo"] = demo_data
+
+    return jsonify(return_data)
 
 #
 # Get a list of unique states
@@ -245,7 +350,7 @@ def getallmortalities(death):
         Fips.long
     )
 
-    print(query.statement.compile())
+    # print(query.statement.compile())
 
     # Get all the results
     results = query.all()
