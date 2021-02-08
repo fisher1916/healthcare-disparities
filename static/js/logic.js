@@ -5,6 +5,10 @@ var racemortalitiesURL = "/racemortalities/";
 var measuresURL = "/measures";
 var urbanruralmortalitiesURL = "/urbanruralmortalities/";
 
+//
+// Map out the mortality abbreviations
+//
+
 function mortalityMap(mortality) {
   var myMortality = "Unknown";
   switch (mortality) {
@@ -37,6 +41,10 @@ function getSortedElementsByKey(targetData, key) {
   return returnArray.sort((a, b) => (a[key] > b[key] ? 1 : -1));
 }
 
+//
+// Update the state score bar chart
+//
+
 function updateStateChart(state) {
   // Default to the full state name
   var valueText = d3.select("#stateSelect option:checked").text();
@@ -46,11 +54,13 @@ function updateStateChart(state) {
     valueText = "All States";
   }
 
-  d3.json(mortalitiesUrl + state).then((mortalities) => {
+  d3.json(mortalitiesUrl + state).then((data) => {
+    console.log("state: " + state);
+    console.log(data);
     var barTrace = {
       type: "bar",
-      x: mortalities.map((d) => mortalityMap(d.measure)),
-      y: mortalities.map((d) => d.score),
+      x: data.measures.map((d) => mortalityMap(d.measure)),
+      y: data.measures.map((d) => d.score),
     };
 
     var barData = [barTrace];
@@ -63,7 +73,26 @@ function updateStateChart(state) {
       },
     };
 
-    Plotly.newPlot("chart1", barData, barLayout);
+    Plotly.newPlot("bar1", barData, barLayout);
+
+    var bar2Trace = {
+      type: "bar",
+      orientation: "h",
+      x: data.demo.map((d) => d.percent),
+      y: data.demo.map((d) => d.name),
+    };
+
+    var bar2Data = [bar2Trace];
+
+    var bar2Layout = {
+      title: valueText + " Demographic (%)",
+      xaxis: {
+        title: "Average (%)",
+        automargin: true,
+      },
+    };
+
+    Plotly.newPlot("bar2", bar2Data, bar2Layout);
   });
 }
 
