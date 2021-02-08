@@ -23,3 +23,8 @@ html {
 #measureSelect {
   width: 100px;
 }
+
+.radioadjust {
+  text-align: center;
+  margin-left: 5px;
+}

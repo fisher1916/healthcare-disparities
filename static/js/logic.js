@@ -258,13 +258,34 @@ function populateData() {
   d3.json(measuresURL).then((measures) => {
     // console.log("measures:");
     // console.log(measures);
-    populateDropdown(
-      "measureSelect",
-      measures,
-      "measure",
-      "measure",
-      measureChange
-    );
+
+    // Create the measure selectors
+    var form = d3.selectAll("form");
+
+    labels = form
+      .selectAll(null)
+      .data(measures)
+      .enter()
+      .append("label")
+      .attr("class", "radioadjust")
+      .append("input")
+      .attr("type", "radio")
+      .attr("class", "shape")
+      .attr("name", "mode")
+      .attr("value", function (d) {
+        return d.measure;
+      })
+      .property("checked", function (d) {
+        return d.measure === "Death rate for COPD patients";
+      })
+      .on("change", measureChange);
+
+    d3.selectAll("label")
+      .append("text")
+      .attr("class", "radioadjust")
+      .text(function (d) {
+        return d.measure;
+      });
   });
 }
 
