@@ -309,6 +309,7 @@ def urbanruralmortalities(death):
     }
     return jsonify(cms_data)
 
+
 #
 # Get all county data by mortality (death) category
 #
@@ -324,6 +325,7 @@ def getallmortalities():
     query = session.query(
         Cms.state,
         Cms.county_name,
+        Cms.measure_name,
         Cms.total_population,
         Cms.race_category,
         Cms.urban_rural_category,
@@ -332,17 +334,18 @@ def getallmortalities():
         func.avg(Cms.score)
     )
 
-    death = "Death rate for COPD patients"
+    #death = "Death rate for COPD patients"
 
     # check for the all condition and filter if valid state passed
     query = query.filter(
-        Cms.measure_name == death,
+        #    Cms.measure_name == death,
         Cms.state_code == Fips.state_code,
         Cms.county_code == Fips.county_code,
     )
     query = query.group_by(
         Cms.state,
         Cms.county_name,
+        Cms.measure_name,
         Cms.total_population,
         Cms.race_category,
         Cms.urban_rural_category,
@@ -358,7 +361,7 @@ def getallmortalities():
     session.close()
 
     counties = []
-    for state, county, population, race, urban_rural, lat, lng, score in results:
+    for state, county, measure_name, population, race, urban_rural, lat, lng, score in results:
         county_dict = {}
         county_dict["coordinates"] = [lat, lng]
 
@@ -370,7 +373,7 @@ def getallmortalities():
         detail_dict["area"] = urban_rural
         detail_dict["score"] = score
 
-        county_dict[death] = detail_dict
+        county_dict[measure_name] = detail_dict
 
         counties.append(county_dict)
 
