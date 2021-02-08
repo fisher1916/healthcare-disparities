@@ -1,8 +1,37 @@
-var locURL = "/getallmortalities/anyjunkhere";
+// Function to determine marker size based on population
+function markerSize(value) {
+  return value * 3000;
+}
 
-d3.json(locURL).then((location) => {
-  console.log(location);
-  L.tileLayer(
+function getRaceColor(race) {
+  var color = "green";
+  if (race === "B") {
+    color = "purple";
+  }
+  return color;
+}
+
+d3.json("/getallmortalities").then((data) => {
+  // Define arrays to hold created measure markers
+  var copdMarkers = [];
+
+  data.forEach((location) => {
+    copdMarkers.push(
+      L.circle(location.coordinates, {
+        stroke: false,
+        fillOpacity: 0.75,
+        color: getRaceColor(location["Death rate for COPD patients"]["race"]),
+        fillColor: getRaceColor(
+          location["Death rate for COPD patients"]["race"]
+        ),
+        radius: markerSize(location["Death rate for COPD patients"]["score"]),
+      })
+    );
+  });
+
+  // Create base layers
+  // Streetmap Layer
+  var streetmap = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
       attribution:
@@ -13,43 +42,45 @@ d3.json(locURL).then((location) => {
       id: "mapbox/streets-v11",
       accessToken: API_KEY,
     }
-  ).addTo(myMap);
-  
-  var quakeMarker = L.geoJson(location.counties, {
-    // Style each feature (in this case a neighborhood)
-    pointToLayer: function (county, latlng) {
-      console.log(latlng)
-      return L.circleMarker(latlng);      
-    },
-    // Called on each feature
-    // onEachFeature: function (county, layer) {
-    //   // Set mouse events to change map styling
-    //   layer.bindPopup(
-    //     "<h1>" +
-    //       county.properties.mag +
-    //       "</h1> <hr> <h2>" +
-    //       county.properties.place +
-    //       "</h1> <hr> <h2>" +
-    //       new Date(county.properties.time) +
-    //       "</h2>"
-    //   );
-    // },
-    // style: function (county) {
-    //   return {
-    //     color: "black",
-    //     // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-    //     fillColor: chooseColor(county.geometry.coordinates[2]),
-    //     fillOpacity: 0.5,
-    //     radius: county.properties.mag * 4,
-    //     weight: 1.5,
-    //   };
-    // },
+  );
+
+  var lightmap = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+    {
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: "light-v10",
+      accessToken: API_KEY,
+    }
+  );
+
+  // Create two separate layer groups: one for cities and one for states
+  var copd = L.layerGroup(copdMarkers);
+
+  // Create a baseMaps object
+  var baseMaps = {
+    "Light Map": lightmap,
+    "Street Map": streetmap,
+  };
+
+  // Create an overlay object
+  var overlayMaps = {
+    COPD: copd,
+  };
+
+  // Define a map object
+  var myMap = L.map("mapid", {
+    center: [37.09, -95.71],
+    zoom: 4,
+    layers: [lightmap, copd],
   });
-});
-// Creating map object
-var myMap = L.map("mapid", {
-  center: [37.0902, -95.7129],
-  zoom: 4,
-});
 
-
+  // Pass our map layers into our layer control
+  // Add the layer control to the map
+  L.control
+    .layers(baseMaps, overlayMaps, {
+      collapsed: false,
+    })
+    .addTo(myMap);
+});
