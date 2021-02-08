@@ -4,7 +4,7 @@
 
 
 ## Files
-[app.py] (https://github.com/fisher1916/healthcare-disparities/blob/main/app.py) is the primary application file.
+[app.py](https://github.com/fisher1916/healthcare-disparities/blob/main/app.py) is the primary application file.
 
 
 
