@@ -55,8 +55,6 @@ function updateStateChart(state) {
   }
 
   d3.json(mortalitiesUrl + state).then((data) => {
-    console.log("state: " + state);
-    console.log(data);
     var barTrace = {
       type: "bar",
       x: data.measures.map((d) => mortalityMap(d.measure)),
@@ -309,7 +307,8 @@ function populateData() {
       })
       .on("change", measureChange);
 
-    d3.selectAll("label")
+    d3.select("form")
+      .selectAll("label")
       .append("text")
       .attr("class", "radioadjust")
       .text(function (d) {
