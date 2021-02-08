@@ -314,8 +314,8 @@ def urbanruralmortalities(death):
 #
 
 
-@app.route("/getallmortalities/<death>")
-def getallmortalities(death):
+@app.route("/getallmortalities")
+def getallmortalities():
     # Create session (link) from Python to the DB
     session = Session(engine)
 
@@ -360,22 +360,21 @@ def getallmortalities(death):
     counties = []
     for state, county, population, race, urban_rural, lat, lng, score in results:
         county_dict = {}
-        county_dict["county"] = county
-        county_dict["state"] = state
-        county_dict["population"] = population
-        county_dict["race"] = race
-        county_dict["area"] = urban_rural
-        county_dict["lat"] = lat
-        county_dict["long"] = lng
-        county_dict["score"] = score
+        county_dict["coordinates"] = [lat, lng]
+
+        detail_dict = {}
+        detail_dict["county"] = county
+        detail_dict["state"] = state
+        detail_dict["population"] = population
+        detail_dict["race"] = race
+        detail_dict["area"] = urban_rural
+        detail_dict["score"] = score
+
+        county_dict[death] = detail_dict
 
         counties.append(county_dict)
 
-    counties_data = {
-        "measure": death,
-        "counties": counties,
-    }
-    return jsonify(counties_data)
+    return jsonify(counties)
 
 
 # main program
