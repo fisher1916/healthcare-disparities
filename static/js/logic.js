@@ -312,7 +312,7 @@ function populateData() {
       .append("text")
       .attr("class", "radioadjust")
       .text(function (d) {
-        return d.measure;
+        return mortalityMap(d.measure);
       });
   });
 }

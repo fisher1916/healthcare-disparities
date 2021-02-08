@@ -12,21 +12,68 @@ function getRaceColor(race) {
 }
 
 d3.json("/getallmortalities").then((data) => {
+  //console.log(data);
+
   // Define arrays to hold created measure markers
   var copdMarkers = [];
+  var haMarkers = [];
+  var hfMarkers = [];
+  var pnMarkers = [];
 
   data.forEach((location) => {
-    copdMarkers.push(
-      L.circle(location.coordinates, {
-        stroke: false,
-        fillOpacity: 0.75,
-        color: getRaceColor(location["Death rate for COPD patients"]["race"]),
-        fillColor: getRaceColor(
-          location["Death rate for COPD patients"]["race"]
-        ),
-        radius: markerSize(location["Death rate for COPD patients"]["score"]),
-      })
-    );
+    // console.log(location);
+    // COPD
+    if (location["Death rate for COPD patients"] != null) {
+      var measure = location["Death rate for COPD patients"];
+      copdMarkers.push(
+        L.circle(location.coordinates, {
+          stroke: false,
+          fillOpacity: 0.75,
+          color: getRaceColor(measure.race),
+          fillColor: getRaceColor(measure.race),
+          radius: markerSize(measure.score),
+        })
+      );
+    }
+    // Heart Attack
+    if (location["Death rate for heart attack patients"] != null) {
+      var measure = location["Death rate for heart attack patients"];
+      haMarkers.push(
+        L.circle(location.coordinates, {
+          stroke: false,
+          fillOpacity: 0.75,
+          color: getRaceColor(measure.race),
+          fillColor: getRaceColor(measure.race),
+          radius: markerSize(measure.score),
+        })
+      );
+    }
+    // Heart Failure
+    if (location["Death rate for heart failure patients"] != null) {
+      var measure = location["Death rate for heart failure patients"];
+      hfMarkers.push(
+        L.circle(location.coordinates, {
+          stroke: false,
+          fillOpacity: 0.75,
+          color: getRaceColor(measure.race),
+          fillColor: getRaceColor(measure.race),
+          radius: markerSize(measure.score),
+        })
+      );
+    }
+    // Pneumonia
+    if (location["Death rate for pneumonia patients"] != null) {
+      var measure = location["Death rate for pneumonia patients"];
+      pnMarkers.push(
+        L.circle(location.coordinates, {
+          stroke: false,
+          fillOpacity: 0.75,
+          color: getRaceColor(measure.race),
+          fillColor: getRaceColor(measure.race),
+          radius: markerSize(measure.score),
+        })
+      );
+    }
   });
 
   // Create base layers
@@ -57,6 +104,9 @@ d3.json("/getallmortalities").then((data) => {
 
   // Create two separate layer groups: one for cities and one for states
   var copd = L.layerGroup(copdMarkers);
+  var ha = L.layerGroup(haMarkers);
+  var hf = L.layerGroup(hfMarkers);
+  var pn = L.layerGroup(pnMarkers);
 
   // Create a baseMaps object
   var baseMaps = {
@@ -67,6 +117,9 @@ d3.json("/getallmortalities").then((data) => {
   // Create an overlay object
   var overlayMaps = {
     COPD: copd,
+    "Heart Attack": ha,
+    "Heart Failure": hf,
+    Pneumonia: pn,
   };
 
   // Define a map object
