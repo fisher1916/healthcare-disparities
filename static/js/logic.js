@@ -135,7 +135,7 @@ function updateHistogram(measure) {
     var x2mean = d3.mean(x2);
 
     var trace1 = {
-      name: "White Scores",
+      name: "White Mortality Rate",
       x: x1,
       type: "histogram",
       opacity: 0.5,
@@ -144,7 +144,7 @@ function updateHistogram(measure) {
       },
     };
     var trace2 = {
-      name: "Black Scores",
+      name: "Black Mortality Rate",
       x: x2,
       type: "histogram",
       opacity: 0.6,
@@ -204,16 +204,16 @@ function updateHistogram2(measure) {
     var x2mean = d3.mean(x2);
 
     var trace1 = {
-      name: "Urban Scores",
+      name: "Urban Mortality Rate",
       x: x1,
       type: "histogram",
       opacity: 0.5,
       marker: {
-        color: "yellow",
+        color: "midnightblue",
       },
     };
     var trace2 = {
-      name: "Rural Scores",
+      name: "Rural Mortality Rate",
       x: x2,
       type: "histogram",
       opacity: 0.6,
