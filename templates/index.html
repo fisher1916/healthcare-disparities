@@ -27,7 +27,12 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3>Health policy writers have a duty to keep all populations in mind when writing new laws.</h3><br>
+                <h3>Health policy writers have a duty to keep all populations in mind when writing new laws. To this end, a key goal of the 
+                    Afforable Care Act was to address systemic demographic disparties in health outcomes. In the 10 years since the law was 
+                    passed, has there been a measurable impact? 
+                </h3><br>
+                For the health measures, data was taken from CMS, which primarily has a patient population of people 65yrs 
+                and older. 
 
                 <h2>Overview</h2>
                 <hr>
@@ -64,16 +69,24 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h4>These histograms compare the frequency of county mortality rates in the U.S., for the selected
-                    health measure.
-                    How the groups are separated: The mean race(white and black) population of each county in the U.S.
-                    was taken. Then
-                    the aggregate mean of all the counties was taken. Those counties equal or above the mean of each
-                    race was then
-                    placed into their respective groups.
-                    The groups, white and black, are compared based on taking the mean population of each race in each
-                    county in the U.S of each race
-
+                <h2>Data Analysis</h2>
+                <hr>
+                <h4>These histograms compare the frequency of county mortality rates in the U.S. for black and white populations, and urban 
+                    rural populations for the selected health measure.</br></br>
+                    <i>Methodology of racial categories:</i>  The mean population of each race(white and black) was calculated for 
+                    each county in the U.S. Then the aggregate mean of all the counties was taken(ie. summed the means of the counties
+                    and calculated a mean of the means). Those counties equal or above the mean of each race was then placed into their respective groups.
+                </br></br>
+                <strong>COPD:</strong> While the frequency of COPD is higher in white populations, the mortality rate shows no difference 
+                between the racial categories. Similarly there was no significant difference between rural and urban populations.</br></br>
+                <strong>Heart Attack:</strong> Black counties show a higher mortality rate for heart attacks, but the margin in slim and not 
+                statistically significant. However, when heart attack mortality rates were compared between rural and urban counties, rural populations 
+                show a statistically significant higher rate of mortality.</br></br>
+                <strong>Heart Failure:</strong> The results for heart failure were surprising. While black populations have a higher frequency of actually having heart failure, 
+                white populations have a significantly higher mortality rate compared to blacks. When rural and urban populations are compared, 
+                rural populations show a statistically significant higher mortality rate. </br></br>
+                <strong>Pneumonia:</strong> Black counties show a higher mortality rate on the histogram, but the t-test indicates (***double check this)no significant 
+                difference. </br></br>
                 </h4>
             </div>
         </div>
@@ -93,91 +106,6 @@
                 <div id="urbanChart"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h4>T-Tests: Black vs White</h4>
-                <table>
-                    <thead>
-
-                        <tr>
-                            <th>
-                                Health Measure
-                            </th>
-                            <th>
-                                Statistic
-                            </th>
-                            <th>
-                                P-Value
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>COPD</td>
-                            <td>0.02754110214524168</td>
-                            <td>0.978033880239575</td>
-                        </tr>
-                        <tr>
-                            <td>Heart Attack</td>
-                            <td>1.7499458570056674</td>
-                            <td>0.08050344559882687</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Heart Failure</td>
-                            <td class="highlight">-8.020500438026618</td>
-                            <td class="highlight">2.6328106862107735e-15</td>
-                        </tr>
-                        <tr>
-                            <td>Pneumonia</td>
-                            <td>3.0661114122213835</td>
-                            <td>3.0661114122213835</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <h4>T-Tests: Urban vs Rural</h4>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Health Measure
-                            </th>
-                            <th>
-                                Statistic
-                            </th>
-                            <th>
-                                P-Value
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>COPD</td>
-                            <td>-1.1290733610434243</td>
-                            <td>0.259033234502412</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Heart Attack</td>
-                            <td class="highlight">2.1995850041302556</td>
-                            <td class="highlight">0.028577996648351322</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Heart Failure</td>
-                            <td class="highlight">6.020884974265895</td>
-                            <td class="highlight">2.145756436292528e-09</td>
-                        </tr>
-                        <tr>
-                            <td>Pneumonia</td>
-                            <td>1.3873500405319792</td>
-                            <td>0.16551189293129867</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <br />
         <div class="row">
             <div class="col-md-12">
                 <p>Explain map</p>
