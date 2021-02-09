@@ -235,7 +235,7 @@ function updateHistogram2(measure) {
           x1: x1mean,
           y1: 140,
           line: {
-            color: "yellow",
+            color: "midnightblue",
             width: 3.5,
             dash: "dot",
           },
