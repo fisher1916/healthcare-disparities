@@ -32,20 +32,20 @@ d3.json("/getallmortalities").then((data) => {
           color: getRaceColor(measure.race),
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
-        })
-        .bindPopup(
+        }).bindPopup(
           "<h3>" +
-        `${measure.county}, ${measure.state}`+
-        "</h1> <hr> <h4>" +
-        `${measure.area}`+
-        "</h1><h4>" +
-        `Score: ${measure.score}`)
+            `${measure.county}, ${measure.state}` +
+            "</h1> <hr> <h4>" +
+            `${measure.area}` +
+            "</h1><h4>" +
+            `Score: ${measure.score}`
+        )
       );
     }
     // Heart Attack
     if (location["Death rate for heart attack patients"] != null) {
       var measure = location["Death rate for heart attack patients"];
-      console.log(measure)
+      console.log(measure);
       haMarkers.push(
         L.circle(location.coordinates, {
           stroke: false,
@@ -55,11 +55,12 @@ d3.json("/getallmortalities").then((data) => {
           radius: markerSize(measure.score),
         }).bindPopup(
           "<h3>" +
-        `${measure.county}, ${measure.state}`+
-        "</h1> <hr> <h4>" +
-        `${measure.area}`+
-        "</h1><h4>" +
-        `Score: ${measure.score}`)
+            `${measure.county}, ${measure.state}` +
+            "</h1> <hr> <h4>" +
+            `${measure.area}` +
+            "</h1><h4>" +
+            `Score: ${measure.score}`
+        )
       );
     }
     // Heart Failure
@@ -72,14 +73,14 @@ d3.json("/getallmortalities").then((data) => {
           color: getRaceColor(measure.race),
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
-        })
-        .bindPopup(
+        }).bindPopup(
           "<h3>" +
-        `${measure.county}, ${measure.state}`+
-        "</h1> <hr> <h4>" +
-        `${measure.area}`+
-        "</h1><h4>" +
-        `Score: ${measure.score}`)
+            `${measure.county}, ${measure.state}` +
+            "</h1> <hr> <h4>" +
+            `${measure.area}` +
+            "</h1><h4>" +
+            `Score: ${measure.score}`
+        )
       );
     }
     // Pneumonia
@@ -92,14 +93,14 @@ d3.json("/getallmortalities").then((data) => {
           color: getRaceColor(measure.race),
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
-        })
-        .bindPopup(
+        }).bindPopup(
           "<h3>" +
-        `${measure.county}, ${measure.state}`+
-        "</h1> <hr> <h4>" +
-        `${measure.area}`+
-        "</h1><h4>" +
-        `Score: ${measure.score}`)
+            `${measure.county}, ${measure.state}` +
+            "</h1> <hr> <h4>" +
+            `${measure.area}` +
+            "</h1><h4>" +
+            `Score: ${measure.score}`
+        )
       );
     }
   });
@@ -165,23 +166,28 @@ d3.json("/getallmortalities").then((data) => {
     })
     .addTo(myMap);
 
-    var legend = L.control({ position: "bottomright" });
+  var legend = L.control({ position: "bottomright" });
 
-    legend.onAdd = function (myMap) {
-      var div = L.DomUtil.create("div", "info legend"),
-        labels = ["White", "Black"];
-      colors = ["green", "purple"];
-      // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < labels.length; i++) {
-        div.innerHTML +=
-          '<i style="background:' +
-          colors[i] +
-          '"></i> ' +
-           (labels[i] ? "" + labels[i] + "<br>" : "+");
-      }
-  
-      return div;
-    };
-    legend.addTo(myMap);
+  var preHtml = '<div class="legend-scale">' + '<ul class="legend-labels">';
+  var postHtml = "</ul></div>";
 
+  legend.onAdd = function (myMap) {
+    var div = L.DomUtil.create("div", "info my-legend"),
+      labels = ["White", "Black"];
+    colors = ["green", "purple"];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < labels.length; i++) {
+      div.innerHTML +=
+        '<li><span style="background:' +
+        colors[i] +
+        '"></span>' +
+        labels[i] +
+        "</li>";
+    }
+
+    div.innerHTML = preHtml + div.innerHTML + postHtml;
+
+    return div;
+  };
+  legend.addTo(myMap);
 });
