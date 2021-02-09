@@ -2,6 +2,13 @@
 
 - Healthcare Disparities tackles the question: Is there a correlation between demographics of race and rural/urban, and specific treatable healthcare conditions in hospitals across the United States? Data is collected from U.S. Census Bureau 2019 (include link), and CMS data from hospitals across the country (include link).
 
+Health conditions Considered: 
+  - COPD 
+  - Heart failure 
+  - Pneumonia
+  - Heart attack
+
+-
 ## Files
 
 [`app.py`](app.py) - contains database queries and API end points for the visualization
@@ -30,6 +37,4 @@
 
 [ETL/ETL-Results](ETL/ETL-Results) - Directory where final versions of csv files are for ETL process, sources csv's for the [`load_data.ipynb`](ETL/load_data.ipynb)
 
-Health conditions: COPD - Heart failure - Pneumonia - Heart attack <br>
 
--
