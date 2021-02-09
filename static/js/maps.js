@@ -38,6 +38,7 @@ d3.json("/getallmortalities").then((data) => {
     // Heart Attack
     if (location["Death rate for heart attack patients"] != null) {
       var measure = location["Death rate for heart attack patients"];
+      console.log(measure)
       haMarkers.push(
         L.circle(location.coordinates, {
           stroke: false,
@@ -45,7 +46,13 @@ d3.json("/getallmortalities").then((data) => {
           color: getRaceColor(measure.race),
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
-        })
+        }).bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1> <hr> <h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Heart Failure
