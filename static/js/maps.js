@@ -38,7 +38,7 @@ d3.json("/getallmortalities").then((data) => {
         `${measure.county}, ${measure.state}`+
         "</h1> <hr> <h4>" +
         `${measure.area}`+
-        "</h1> <hr> <h4>" +
+        "</h1><h4>" +
         `Score: ${measure.score}`)
       );
     }
@@ -58,7 +58,7 @@ d3.json("/getallmortalities").then((data) => {
         `${measure.county}, ${measure.state}`+
         "</h1> <hr> <h4>" +
         `${measure.area}`+
-        "</h1> <hr> <h4>" +
+        "</h1><h4>" +
         `Score: ${measure.score}`)
       );
     }
@@ -78,7 +78,7 @@ d3.json("/getallmortalities").then((data) => {
         `${measure.county}, ${measure.state}`+
         "</h1> <hr> <h4>" +
         `${measure.area}`+
-        "</h1> <hr> <h4>" +
+        "</h1><h4>" +
         `Score: ${measure.score}`)
       );
     }
@@ -98,7 +98,7 @@ d3.json("/getallmortalities").then((data) => {
         `${measure.county}, ${measure.state}`+
         "</h1> <hr> <h4>" +
         `${measure.area}`+
-        "</h1> <hr> <h4>" +
+        "</h1><h4>" +
         `Score: ${measure.score}`)
       );
     }
