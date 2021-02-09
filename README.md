@@ -24,7 +24,7 @@
 
 [`Untitled.ipynb`](Analysis/Unititled.ipynb) - FIPS county and state code latitude and longitude experimental discovery
 
-[ETL](ETL/) - Directory where database prep code is carried over from last project, does csv cleansing and screen scaping (pandas)
+[ETL](ETL/) - Directory where database prep code is carried over from last project, does csv cleansing and screen scraping (pandas)
 
 [`load_data.ipynb`](ETL/load_data.ipynb) - Final scrub, database table creation and insertion into a sqlite database [`cms.db`](static/data)
 
