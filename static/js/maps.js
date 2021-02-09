@@ -139,19 +139,17 @@ d3.json("/getallmortalities").then((data) => {
 
     var legend = L.control({ position: "bottomright" });
 
-    legend.onAdd = function (map) {
+    legend.onAdd = function (myMap) {
       var div = L.DomUtil.create("div", "info legend"),
-        grades = [-10, 10, 30, 50, 70, 90],
-        labels = [];
-      colors = ["green", "yellowgreen", "yellow", "orange", "orangered", "red"];
+        labels = ["White", "Black"];
+      colors = ["green", "purple"];
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < grades.length; i++) {
+      for (var i = 0; i < labels.length; i++) {
         div.innerHTML +=
           '<i style="background:' +
           colors[i] +
           '"></i> ' +
-          grades[i] +
-          (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+           (labels[i] ? "" + labels[i] + "<br>" : "+");
       }
   
       return div;

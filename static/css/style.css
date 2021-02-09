@@ -30,6 +30,12 @@ html {
 }
 
 
+.legend {
+  line-height: 18px;
+  color: #555;
+  background-color: white !important;
+  padding: 5px;
+}
 .legend i {
   width: 18px;
   height: 18px;
