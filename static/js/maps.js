@@ -33,6 +33,13 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1> <hr> <h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Heart Attack
@@ -66,6 +73,13 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1> <hr> <h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Pneumonia
@@ -79,6 +93,13 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1> <hr> <h4>" +
+        `Score: ${measure.score}`)
       );
     }
   });
