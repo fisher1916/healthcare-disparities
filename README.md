@@ -22,7 +22,7 @@
 
 [`General_Demo_Analysis.ipynb`](Analysis/General_Demo_Analysis.ipynb) - This shows analysis on other demographic data
 
-[`Untitled.ipynb`](Analysis/Unititled.ipynb) - FIPS county and state code latitude and longitude experimental disocovery
+[`Untitled.ipynb`](Analysis/Unititled.ipynb) - FIPS county and state code latitude and longitude experimental discovery
 
 [ETL](ETL/) - Directory where database prep code is carried over from last project, does csv cleansing and screen scaping (pandas)
 
