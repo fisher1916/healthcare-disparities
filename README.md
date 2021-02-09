@@ -49,6 +49,15 @@ Health conditions Considered:
 1. Execute the `app.py` file by typing `python app.py`
 1. Open up a browser and go to http://localhost:5000/
 
+##Sources
+1. Census - Race Data:
+ - https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}
+ - https://api.census.gov/data/2019/acs/acs5/profile/groups/DP05.html
+1. Census - Population/Income Data:
+ - https://api.census.gov/data/2019/acs/acs5/subject?get={fetchColumns}&for=county&in=state:*&in=county:*&key={key}
+ - https://api.census.gov/data/2019/acs/acs5/subject/variables.html
+
+
 ## Authors
 
-Made by Erica, Jenny, Josh, [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2020.
+Made by Erica, Jenny, Josh, [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
