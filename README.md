@@ -8,7 +8,6 @@ Health conditions Considered:
   - Pneumonia
   - Heart attack
 
--
 ## Files
 
 [`app.py`](app.py) - contains database queries and API end points for the visualization
