@@ -36,4 +36,19 @@ Health conditions Considered:
 
 [ETL/ETL-Results](ETL/ETL-Results) - Directory where final versions of csv files are for ETL process, sources csv's for the [`load_data.ipynb`](ETL/load_data.ipynb)
 
+## Execution
 
+1. The assumption is that you have a working Python 3.6 environment and:
+
+   - Jupyter Notebook 6.1.4 (If you want to explore any of the notebooks)
+   - Flask 1.1.2
+   - SQLAlchemy 1.3.17
+
+1. Clone the [git repository](https://github.com/fisher1916/healthcare-disparities) for this project
+1. Change into the repository directory
+1. Execute the `app.py` file by typing `python app.py`
+1. Open up a browser and go to http://localhost:5000/
+
+## Authors
+
+Made by Erica, Jenny, Josh, [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2020.
