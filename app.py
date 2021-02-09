@@ -79,6 +79,7 @@ def mortalities(state):
     query = session.query(func.avg(Cms.percent_white),
                           func.avg(Cms.percent_black))
 
+
     # check for the all condition and filter if valid state passed
     if state != "all":
         query = query.filter(Cms.state == state)
