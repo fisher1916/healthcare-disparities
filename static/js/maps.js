@@ -33,11 +33,19 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1><h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Heart Attack
     if (location["Death rate for heart attack patients"] != null) {
       var measure = location["Death rate for heart attack patients"];
+      console.log(measure)
       haMarkers.push(
         L.circle(location.coordinates, {
           stroke: false,
@@ -45,7 +53,13 @@ d3.json("/getallmortalities").then((data) => {
           color: getRaceColor(measure.race),
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
-        })
+        }).bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1><h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Heart Failure
@@ -59,6 +73,13 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1><h4>" +
+        `Score: ${measure.score}`)
       );
     }
     // Pneumonia
@@ -72,6 +93,13 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         })
+        .bindPopup(
+          "<h3>" +
+        `${measure.county}, ${measure.state}`+
+        "</h1> <hr> <h4>" +
+        `${measure.area}`+
+        "</h1><h4>" +
+        `Score: ${measure.score}`)
       );
     }
   });
@@ -136,4 +164,24 @@ d3.json("/getallmortalities").then((data) => {
       collapsed: false,
     })
     .addTo(myMap);
+
+    var legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function (myMap) {
+      var div = L.DomUtil.create("div", "info legend"),
+        labels = ["White", "Black"];
+      colors = ["green", "purple"];
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < labels.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' +
+          colors[i] +
+          '"></i> ' +
+           (labels[i] ? "" + labels[i] + "<br>" : "+");
+      }
+  
+      return div;
+    };
+    legend.addTo(myMap);
+
 });
