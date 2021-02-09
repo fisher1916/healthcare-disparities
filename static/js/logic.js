@@ -72,18 +72,21 @@ function updateStateChart(state) {
     };
 
     Plotly.newPlot("bar1", barData, barLayout);
-
+    var race = data.demo.filter(
+      (d) => d.name === "White" || d.name === "Black"
+    );
+    console.log(race);
     var bar2Trace = {
       type: "bar",
       orientation: "h",
-      x: data.demo.map((d) => d.percent),
-      y: data.demo.map((d) => d.name),
+      x: race.map((d) => d.percent),
+      y: race.map((d) => d.name),
     };
 
     var bar2Data = [bar2Trace];
 
     var bar2Layout = {
-      title: valueText + " Demographic (%)",
+      title: valueText + " Black/White (%)",
       xaxis: {
         title: "Average (%)",
         automargin: true,
@@ -91,6 +94,29 @@ function updateStateChart(state) {
     };
 
     Plotly.newPlot("bar2", bar2Data, bar2Layout);
+
+    var area = data.demo.filter(
+      (d) => d.name === "Urban" || d.name === "Rural"
+    );
+    console.log(area);
+
+    var bar3Trace = {
+      type: "bar",
+      orientation: "h",
+      x: area.map((d) => d.percent),
+      y: area.map((d) => d.name),
+    };
+    var bar3Data = [bar3Trace];
+
+    var bar3Layout = {
+      title: valueText + " Urban/Rural (%)",
+      xaxis: {
+        title: "Average (%)",
+        automargin: true,
+      },
+    };
+
+    Plotly.newPlot("bar3", bar3Data, bar3Layout);
   });
 }
 

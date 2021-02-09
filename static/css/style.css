@@ -29,7 +29,6 @@ html {
   margin-left: 5px;
 }
 
-
 .legend {
   line-height: 18px;
   color: #555;
@@ -42,4 +41,12 @@ html {
   float: left;
   margin-right: 8px;
   opacity: 0.7;
+}
+#bar2,
+#bar3 {
+  height: 250px;
+}
+
+#bar1 {
+  height: 500px;
 }
