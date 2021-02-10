@@ -70,6 +70,8 @@ There are some indications that point to some correlation in some disease catego
 
 4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5918944/
 
+5. https://www.healthcare.gov/glossary/affordable-care-act/
+
 ## Authors
 
 Made by Erica, Jenny, Josh, [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
