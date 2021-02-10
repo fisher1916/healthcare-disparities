@@ -75,7 +75,10 @@ There are some indications that point to some correlation in some disease catego
  
 3. https://data.cms.gov/provider-data/search?theme=Hospitals
 
-4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6867730/
+4. Background on demographic disparities:
+
+  - Racial disparities in aging Americans: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6867730/
+  - Health disparities in rural compared to urban health: https://hpi.georgetown.edu/rural/ 
 
 5. https://www.healthcare.gov/glossary/affordable-care-act/
 
