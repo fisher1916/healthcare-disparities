@@ -35,6 +35,8 @@ d3.json("/getallmortalities").then((data) => {
         }).bindPopup(
           "<h3>" +
             `${measure.county}, ${measure.state}` +
+            "</h1><h4>"+
+            `${(measure.race === "W") ? "White" : "Black"}`+
             "</h1> <hr> <h4>" +
             `${measure.area}` +
             "</h1><h4>" +
@@ -56,6 +58,8 @@ d3.json("/getallmortalities").then((data) => {
         }).bindPopup(
           "<h3>" +
             `${measure.county}, ${measure.state}` +
+            "</h1><h4>"+
+            `${(measure.race === "W") ? "White" : "Black"}`+
             "</h1> <hr> <h4>" +
             `${measure.area}` +
             "</h1><h4>" +
@@ -98,6 +102,8 @@ d3.json("/getallmortalities").then((data) => {
         }).bindPopup(
           "<h3>" +
             `${measure.county}, ${measure.state}` +
+            "</h1><h4>"+
+            `${(measure.race === "W") ? "White" : "Black"}`+
             "</h1> <hr> <h4>" +
             `${measure.area}` +
             "</h1><h4>" +
