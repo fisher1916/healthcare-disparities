@@ -52,7 +52,7 @@ Health conditions Considered:
 1. Execute the `app.py` file by typing `python app.py`
 1. Open up a browser and go to http://localhost:5000/
 
-## Conlusion
+## Conclusion
 There are some indications that point to some correlation in some disease categories. Due to the fact that the data is only looking at Medicare patients over the age of 65, and that some of the urban rural data may need further refinement, more analysis is recommended.
 
 ## Sources
