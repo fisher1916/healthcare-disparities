@@ -1,12 +1,12 @@
 # Healthcare Disparities
 
-- Healthcare Disparities tackles the question: Is there a correlation between demographics of race and rural/urban, and specific treatable healthcare conditions in hospitals across the United States? Data is collected from U.S. Census Bureau 2019 (include link), and CMS data from hospitals across the country (include link).
+- Healthcare Disparities tackles the question: Is there a correlation between demographics of race and rural/urban, and specific treatable healthcare conditions in hospitals across the United States? Data is collected from U.S. Census Bureau 2019 (https://www.census.gov/data/developers/data-sets.html), and CMS data from hospitals across the country (https://data.cms.gov/provider-data/search?theme=Hospitals).
 
 Health conditions Considered: 
-  - COPD 
-  - Heart failure 
-  - Pneumonia
-  - Heart attack
+  - COPD mortality
+  - Heart failure mortality
+  - Pneumonia mortality
+  - Heart attack mortality
 
 ## Files
 
@@ -36,6 +36,9 @@ Health conditions Considered:
 
 [ETL/ETL-Results](ETL/ETL-Results) - Directory where final versions of csv files are for ETL process, sources csv's for the [`load_data.ipynb`](ETL/load_data.ipynb)
 
+## Results
+(screenshots of graphs here)
+
 ## Execution
 
 1. The assumption is that you have a working Python 3.6 environment and:
@@ -49,14 +52,18 @@ Health conditions Considered:
 1. Execute the `app.py` file by typing `python app.py`
 1. Open up a browser and go to http://localhost:5000/
 
-##Sources
+## Conlusion
+There are some indications that point to some correlation in some disease categories. Due to the fact that the data is only looking at Medciare patients over the age of 65, and that some of the urban rural data may need further refinement, more analysis is recommended.
+
+## Sources
 1. Census - Race Data:
  - https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}
  - https://api.census.gov/data/2019/acs/acs5/profile/groups/DP05.html
 1. Census - Population/Income Data:
  - https://api.census.gov/data/2019/acs/acs5/subject?get={fetchColumns}&for=county&in=state:*&in=county:*&key={key}
  - https://api.census.gov/data/2019/acs/acs5/subject/variables.html
-
+1. https://data.cms.gov/provider-data/search?theme=Hospitals
+1. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5918944/
 
 ## Authors
 
