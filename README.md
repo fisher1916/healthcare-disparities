@@ -74,4 +74,4 @@ There are some indications that point to some correlation in some disease catego
 
 ## Authors
 
-Made by Erica, Jenny, Josh(https://www.linkedin.com/in/josh-gonzalez-williams-7aa9a31b0/), [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
+Made by Erica, Jenny, [Josh](https://www.linkedin.com/in/josh-gonzalez-williams-7aa9a31b0/), [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
