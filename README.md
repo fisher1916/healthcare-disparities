@@ -75,10 +75,10 @@ There are some indications that point to some correlation in some disease catego
  
 3. https://data.cms.gov/provider-data/search?theme=Hospitals
 
-4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5918944/
+4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6867730/
 
 5. https://www.healthcare.gov/glossary/affordable-care-act/
 
 ## Authors
 
-Made by Erica, Jenny, [Josh](https://www.linkedin.com/in/josh-gonzalez-williams-7aa9a31b0/), [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
+Made by [Erica](https://www.linkedin.com/in/ericafisher1), Jenny, [Josh](https://www.linkedin.com/in/josh-gonzalez-williams-7aa9a31b0/), [Jay](https://www.linkedin.com/in/jay-hastings-techy/) with :heart: in 2021.
