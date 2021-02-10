@@ -53,17 +53,22 @@ Health conditions Considered:
 1. Open up a browser and go to http://localhost:5000/
 
 ## Conlusion
-There are some indications that point to some correlation in some disease categories. Due to the fact that the data is only looking at Medciare patients over the age of 65, and that some of the urban rural data may need further refinement, more analysis is recommended.
+There are some indications that point to some correlation in some disease categories. Due to the fact that the data is only looking at Medicare patients over the age of 65, and that some of the urban rural data may need further refinement, more analysis is recommended.
 
 ## Sources
 1. Census - Race Data:
+
  - https://api.census.gov/data/2019/acs/acs5/profile?get={fetchColumns}&for=county:*&in=state:*&key={key}
  - https://api.census.gov/data/2019/acs/acs5/profile/groups/DP05.html
-1. Census - Population/Income Data:
+ 
+2. Census - Population/Income Data:
+
  - https://api.census.gov/data/2019/acs/acs5/subject?get={fetchColumns}&for=county&in=state:*&in=county:*&key={key}
  - https://api.census.gov/data/2019/acs/acs5/subject/variables.html
-1. https://data.cms.gov/provider-data/search?theme=Hospitals
-1. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5918944/
+ 
+3. https://data.cms.gov/provider-data/search?theme=Hospitals
+
+4. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5918944/
 
 ## Authors
 
