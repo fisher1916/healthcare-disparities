@@ -37,7 +37,14 @@ Health conditions Considered:
 [ETL/ETL-Results](ETL/ETL-Results) - Directory where final versions of csv files are for ETL process, sources csv's for the [`load_data.ipynb`](ETL/load_data.ipynb)
 
 ## Results
-(screenshots of graphs here)
+ - OVERVIEW
+ ![bar_charts](https://user-images.githubusercontent.com/71193081/107468087-36592400-6b1c-11eb-87f7-02eeb177e532.JPG)
+  - HISTOGRAMS
+  ![histograms](https://user-images.githubusercontent.com/71193081/107468163-5d175a80-6b1c-11eb-8118-c4d67896f207.JPG)
+   - TABLES WITH T-TEST RESULTS and P-VALUES
+   ![tables](https://user-images.githubusercontent.com/71193081/107468305-8f28bc80-6b1c-11eb-9464-0c751ef20457.JPG)
+   - MAP OF US
+   ![map](https://user-images.githubusercontent.com/71193081/107468295-8afc9f00-6b1c-11eb-823f-8e3e4e0c336c.JPG)
 
 ## Execution
 
