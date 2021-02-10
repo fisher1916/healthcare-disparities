@@ -74,12 +74,14 @@ d3.json("/getallmortalities").then((data) => {
           fillColor: getRaceColor(measure.race),
           radius: markerSize(measure.score),
         }).bindPopup(
-          "<h3>" +
+            "<h3>" +
             `${measure.county}, ${measure.state}` +
+            "</h1><h4>"+
+            `${(measure.race === "W") ? "White" : "Black"}`+
             "</h1> <hr> <h4>" +
             `${measure.area}` +
             "</h1><h4>" +
-            `Score: ${measure.score}`
+            `Score: ${measure.score}`            
         )
       );
     }
