@@ -60,7 +60,7 @@ Health conditions Considered:
 1. Open up a browser and go to http://localhost:5000/
 
 ## Conclusion
-There are some indications that point to some correlation in some disease categories. Due to the fact that the data is only looking at Medicare patients over the age of 65, and that some of the urban rural data may need further refinement, more analysis is recommended.
+There are indications that point to correlation in some disease categories. Specifically, heart failure results show a statistically significant when comparing outcomes of black and white races, and rural and urban communities. There is also room for improvement in the treatment of heart attacks in rural communities. A more pinpoint analysis, possibly at the local level, as to why these outcomes are occuring will assist in the making of actionable recommendations. Due to the fact that the data is only looking at Medicare patients over the age of 65, and that some of the urban/rural data may need further refinement, more analysis is recommended for heart failure and heart attacks. 
 
 ## Sources
 1. Census - Race Data:
